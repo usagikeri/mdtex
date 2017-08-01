@@ -7,6 +7,8 @@ markdownファイルからTeXファイルを作成するスクリプトと，TeX
 pthon3系
 pandoc
 latex
+fireport.sty
+jlisting.sty
 ```
 
 ## Usage
