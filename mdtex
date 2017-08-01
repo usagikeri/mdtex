@@ -10,7 +10,7 @@ args = sys.argv
 pandoc = shlex.split("pandoc {0} -o outmdtex.tex".format(args[1]))
 subprocess.call(pandoc)
 
-with open("/Users/shinya/Desktop/python/semi/mdtex/temple.tex","r") as tf:
+with open("./temple.tex","r") as tf:
     with open("./semireport.tex","w") as wf:
         temp = tf.readlines()
         for i,x in enumerate(temp):
