@@ -1,0 +1,35 @@
+#!/bin/sh
+
+tp(){
+	platex $data.tex && \
+	platex $data.tex && \
+	dvipdfmx $data.dvi
+}
+
+tpo(){
+	platex $data.tex && \
+	platex $data.tex && \
+	dvipdfmx $data.dvi
+
+	open $data.pdf
+}
+
+if [ "$1" = "" ]; then
+    echo "No argument"
+
+else
+
+    getopts "o" opts
+
+    if [ $opts = "o" ]; then
+    	data=`basename $2 .tex`
+
+    	tpo
+
+    else
+        data=`basename $1 .tex`
+
+    	tp
+
+    fi
+fi

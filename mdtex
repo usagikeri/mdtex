@@ -1,0 +1,27 @@
+#!/bin/env/python
+#coding: utf-8
+
+import sys
+import subprocess
+import shlex
+
+args = sys.argv
+
+pandoc = shlex.split("pandoc {0} -o outmdtex.tex".format(args[1]))
+subprocess.call(pandoc)
+
+with open("/Users/shinya/Desktop/python/semi/mdtex/temple.tex","r") as tf:
+    with open("./semireport.tex","w") as wf:
+        temp = tf.readlines()
+        for i,x in enumerate(temp):
+            wf.write(x)
+
+            if i != 45:
+                continue
+
+            with open("./outmdtex.tex","r") as rf:
+                txt = rf.read()
+                txt = txt.replace("\\tightlist","")
+                txt = txt.replace("\\begin{verbatim}","\\begin{lstlisting}")
+                txt = txt.replace("\\end{verbatim}","\\end{lstlisting}")
+                wf.write(txt)
