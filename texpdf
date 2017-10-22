@@ -19,17 +19,17 @@ if [ "$1" = "" ]; then
 
 else
 
-    getopts "o" opts
+    getopts "n" opts
 
-    if [ $opts = "o" ]; then
+    if [ $opts = "n" ]; then
     	data=`basename $2 .tex`
 
-    	tpo
+    	tp
 
     else
         data=`basename $1 .tex`
 
-    	tp
+    	tpo
 
     fi
 fi
