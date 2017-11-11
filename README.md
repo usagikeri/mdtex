@@ -1,14 +1,17 @@
 # mdtexpdf
+
+---
+
 ## Description
 markdownファイルからTeXファイルを作成するスクリプトと，TeXからpdfを作成するスクリプト．
 
 ## Requirement
 ```
-pthon3系
-pandoc
-latex
-fireport.sty
-jlisting.sty
+* pthon3系
+* pandoc
+* latex
+* fireport.sty
+* jlisting.sty
 ```
 [fireport](https://github.com/High-Hill/tex_gaiyo)
 
@@ -18,7 +21,7 @@ jlisting.sty
 3. semireport.texを編集し，細かな修正を加える．
 4. $./texpdf semireport.tex を実行するとpdfファイルが生成される．
 
-$./texpdf -o にするとプレビューが開かれる．
+$./texpdf -n にするとプレビューが開かれない．
 
 ## Coution
 1. テンプレートファイルに行数を指定して差し込んでいる（mdtex19行目）のため自分のテンプレートファイルを使う場合や，テンプレートファイルを編集した場合は注意が必要．
