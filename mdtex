@@ -10,8 +10,10 @@ args = sys.argv
 pandoc = shlex.split("pandoc {0} -o outmdtex.tex".format(args[1]))
 subprocess.call(pandoc)
 
+fileName = args[1].split(".")
+
 with open("./temple.tex","r") as tf:
-    with open("./semireport.tex","w") as wf:
+    with open(fileName[0]+".tex","w") as wf:
         temp = tf.readlines()
         for i,x in enumerate(temp):
             wf.write(x)
