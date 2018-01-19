@@ -1,15 +1,17 @@
 #!/bin/sh
 
 tp(){
-	platex $data.tex && \
-	platex $data.tex && \
+	platex -interaction=scrollmode $data.tex && \
+	platex -interaction=scrollmode $data.tex && \
 	dvipdfmx $data.dvi
+    latexmk -c
 }
 
 tpo(){
-	platex $data.tex && \
-	platex $data.tex && \
+	platex -interaction=scrollmode $data.tex && \
+	platex -interaction=scrollmode $data.tex && \
 	dvipdfmx $data.dvi
+    latexmk -c
 
 	open $data.pdf
 }
