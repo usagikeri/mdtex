@@ -1,6 +1,6 @@
 #!/bin/env/python
-#coding: utf-8
 
+import os
 import sys
 import subprocess
 import shlex
@@ -12,18 +12,20 @@ subprocess.call(pandoc)
 
 fileName = args[1].split(".")
 
-with open("./temple.tex","r") as tf:
-    with open(fileName[0]+".tex","w") as wf:
+with open("./temple.tex", "r") as tf:
+    with open(fileName[0]+".tex", "w") as wf:
         temp = tf.readlines()
-        for i,x in enumerate(temp):
+        for i, x in enumerate(temp):
             wf.write(x)
 
             if i != 45:
                 continue
 
-            with open("./outmdtex.tex","r") as rf:
+            with open("./outmdtex.tex", "r") as rf:
                 txt = rf.read()
-                txt = txt.replace("\\tightlist","")
-                txt = txt.replace("\\begin{verbatim}","\\begin{lstlisting}")
-                txt = txt.replace("\\end{verbatim}","\\end{lstlisting}")
+                txt = txt.replace("\\tightlist", "")
+                txt = txt.replace("\\begin{verbatim}", "\\begin{lstlisting}")
+                txt = txt.replace("\\end{verbatim}", "\\end{lstlisting}")
                 wf.write(txt)
+
+os.remove("./outmdtex.tex")
