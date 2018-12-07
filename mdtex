@@ -5,27 +5,44 @@ import sys
 import subprocess
 import shlex
 
-args = sys.argv
 
-pandoc = shlex.split("pandoc {0} -o outmdtex.tex".format(args[1]))
-subprocess.call(pandoc)
+def main(args):
+    filename, extention = args[1].split(".")
 
-fileName = args[1].split(".")
+    if extention == "md":
+        pandoc = shlex.split("pandoc {0}.md -o outmdtex.tex".format(filename))
+        subprocess.run(pandoc)
+    else:
+        print("Please input md file")
+        sys.exit()
 
-with open("./temple.tex", "r") as tf:
-    with open(fileName[0]+".tex", "w") as wf:
-        temp = tf.readlines()
-        for i, x in enumerate(temp):
-            wf.write(x)
+    try:
+        template = os.environ["MDTEX"]
+    except KeyError:
+        print("Please set the value to environment variable MDTEX.\n\
+    e.g.)$export MDTEX=template file path")
+        sys.exit()
 
-            if i != 45:
-                continue
+    with open(template, "r") as tf:
+        with open(filename[0]+".tex", "w") as wf:
+            temp = tf.readlines()
+            for i, x in enumerate(temp):
+                wf.write(x)
 
-            with open("./outmdtex.tex", "r") as rf:
-                txt = rf.read()
-                txt = txt.replace("\\tightlist", "")
-                txt = txt.replace("\\begin{verbatim}", "\\begin{lstlisting}")
-                txt = txt.replace("\\end{verbatim}", "\\end{lstlisting}")
-                wf.write(txt)
+                if i != 45:
+                    continue
 
-os.remove("./outmdtex.tex")
+                with open("./outmdtex.tex", "r") as rf:
+                    txt = rf.read()
+                    txt = txt.replace("\\tightlist", "")
+                    txt = txt.replace(
+                        "\\begin{verbatim}", "\\begin{lstlisting}")
+                    txt = txt.replace("\\end{verbatim}", "\\end{lstlisting}")
+                    wf.write(txt)
+
+    os.remove("./outmdtex.tex")
+
+
+if __name__ == "__main__":
+    args = sys.argv
+    main(args)
