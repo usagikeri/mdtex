@@ -10,8 +10,9 @@ def main(args):
     filename, extention = args[1].split(".")
 
     if extention == "md":
-        pandoc = shlex.split("pandoc {0}.md -o outmdtex.tex".format(filename))
-        subprocess.run(pandoc)
+        pandoc = shlex.split("pandoc {0}.md -t latex".format(filename))
+        tex_txt = subprocess.run(pandoc, stdout=subprocess.PIPE).stdout.decode("utf-8")
+
     else:
         print("Please input md file")
         sys.exit()
@@ -24,23 +25,17 @@ def main(args):
         sys.exit()
 
     with open(template, "r") as tf:
-        with open(filename[0]+".tex", "w") as wf:
-            temp = tf.readlines()
-            for i, x in enumerate(temp):
-                wf.write(x)
+        with open(filename+".tex", "w") as wf:
+            txt = tex_txt
+            txt = txt.replace("\\tightlist", "")
+            txt = txt.replace(
+                "\\begin{verbatim}", "\\begin{lstlisting}")
+            txt = txt.replace("\\end{verbatim}", "\\end{lstlisting}")
 
-                if i != 45:
-                    continue
+            temp = tf.read()
+            temp = temp.replace("<<REPLACE_POINT>>", txt)
 
-                with open("./outmdtex.tex", "r") as rf:
-                    txt = rf.read()
-                    txt = txt.replace("\\tightlist", "")
-                    txt = txt.replace(
-                        "\\begin{verbatim}", "\\begin{lstlisting}")
-                    txt = txt.replace("\\end{verbatim}", "\\end{lstlisting}")
-                    wf.write(txt)
-
-    os.remove("./outmdtex.tex")
+            wf.write(temp)
 
 
 if __name__ == "__main__":
